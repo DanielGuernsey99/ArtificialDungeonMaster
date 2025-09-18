@@ -1,0 +1,94 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.splash-body {
+    min-height: 100vh;
+    background: radial-gradient(1200px 800px at 10% 10%, rgba(99,102,241,.25), transparent 60%), radial-gradient(1000px 700px at 90% 20%, rgba(16,185,129,.25), transparent 55%), linear-gradient(120deg, #0f172a 0%, #111827 100%);
+    color: #fff;
+}
+
+.splash {
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+/* Subtle animated ornament */
+.bg-ornament::before,
+.bg-ornament::after {
+    content: "";
+    position: absolute;
+    inset: -20% -10% auto -10%;
+    height: 60vh;
+    filter: blur(60px);
+    background: conic-gradient(from 0deg, rgba(99,102,241,.15), rgba(16,185,129,.15), rgba(236,72,153,.15), rgba(99,102,241,.15));
+    animation: spin 20s linear infinite;
+    opacity: .6;
+}
+
+.bg-ornament::after {
+    inset: auto -10% -20% -10%;
+    height: 40vh;
+    animation-duration: 30s;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Glass card */
+.glass {
+    backdrop-filter: blur(10px);
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.15);
+    border-radius: 24px;
+    box-shadow: 0 10px 40px rgba(0,0,0,.35);
+    max-width: 520px;
+}
+
+/* Logo placeholder */
+.logo-circle {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #fff, #a78bfa 60%, #6366f1);
+    animation: pulse 2.2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(99,102,241,.4);
+    }
+
+    50% {
+        transform: scale(1.04);
+        box-shadow: 0 0 0 18px rgba(99,102,241,0);
+    }
+}
+
+.btn-outline-light {
+    border-width: 2px;
+}

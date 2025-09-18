@@ -1,0 +1,54 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<!-- Auth providers -->
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="8.0.19" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.MicrosoftAccount" Version="8.0.19" />
+		<!-- Remove if you don't want Windows SSO -->
+		<!-- <PackageReference Include="Microsoft.AspNetCore.Authentication.Negotiate" Version="8.0.19" /> -->
+
+		<!-- Identity -->
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.19" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.19" />
+
+		<!-- EF Core (keep SAME patch across all EF pkgs) -->
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.19" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.11" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.19" />
+		<!-- If you really use Sqlite locally, keep this at 8.0.19; otherwise delete -->
+		<!-- <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.19" /> -->
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.19">
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+
+		<!-- Scaffolder -->
+		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
+
+		<!-- Your other libs (fine) -->
+		<PackageReference Include="AspNet.Security.OAuth.GitHub" Version="8.3.0" />
+		<PackageReference Include="Azure.AI.OpenAI" Version="2.1.0" />
+		<PackageReference Include="Azure.Communication.Email" Version="1.0.1" />
+		<PackageReference Include="bootstrap" Version="5.3.7" />
+		<PackageReference Include="MailKit" Version="4.13.0" />
+		<PackageReference Include="Microsoft.Identity.Web" Version="3.13.1" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+		<PackageReference Include="OpenAI" Version="2.3.0" />
+	</ItemGroup>
+
+
+	<ItemGroup>
+    <ProjectReference Include="..\ArtificialDungeonMaster.Data\ArtificialDungeonMaster.Data.csproj" />
+  </ItemGroup>
+
+
+	<ItemGroup>
+	  <Folder Include="Areas\Identity\Data\" />
+	</ItemGroup>
+
+</Project>

@@ -1,0 +1,19 @@
+﻿@{
+    ViewData["Title"] = "Sign in";
+    Layout = "~/Views/Shared/_LayoutSplash.cshtml";
+}
+
+<section class="d-flex align-items-center justify-content-center text-center" style="min-height:100vh;">
+    <div class="glass p-4 p-md-5">
+        <h2 class="fw-bold mb-3">Sign in</h2>
+        <p class="text-white-50 mb-4">Choose a provider to continue.</p>
+        <div>
+            <a class="btn btn-lg btn-primary w-100 mb-2" href="/account/external?provider=Google">
+                <i class="bi bi-google me-2"></i> Continue with Google
+            </a>
+            <a class="btn btn-lg btn-outline-light w-100" href="/account/external?provider=Negotiate">
+                <i class="bi bi-windows me-2"></i> Continue with Windows
+            </a>
+        </div>
+    </div>
+</section>

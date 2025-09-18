@@ -1,0 +1,459 @@
+﻿:root {
+    --wood-dark: #2a1d12;
+    --wood-mid: #3b2a1b;
+    --parchment: #f0e6ca;
+    --parchment-edge: #c7b58a;
+    --ink: #2b2b2b;
+    --gold: #c9a44d;
+    --ale: #8c4a2f;
+    --ale-700: #6e3722;
+    --guild: #2e4a6f;
+    --guild-700: #243a57
+}
+
+/* Base */
+html, body {
+    height: 100%
+}
+
+body {
+    background: #000;
+    color: #eee;
+    font-family: "Caudex",serif
+}
+
+.title-fantasy {
+    font-family: "Cinzel",serif;
+    letter-spacing: .5px
+}
+
+/* Splash container + 3D perspective */
+.splash.tavern {
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+    perspective: 1200px;
+    background: radial-gradient(1200px 600px at 50% 80%,#1b120b 0%,#0e0a06 60%,#070504 100%)
+}
+
+/* 3D background canvas (behind UI) */
+#tavern3d-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    z-index: 1
+}
+
+/* Wood plank wall (kept for graceful fallback / extra texture) */
+.bg-wood {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg,rgba(0,0,0,.25) 0 1px,transparent 1px 100%), linear-gradient(180deg,var(--wood-mid),var(--wood-dark));
+    background-size: 120px 100%,100% 100%;
+    filter: brightness(.9) contrast(1.1);
+    z-index: 0
+}
+
+/* Vignette */
+.vignette {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    box-shadow: inset 0 0 180px 80px rgba(0,0,0,.85)
+}
+
+/* Ember overlay (CSS layer — WebGL embers render behind UI too) */
+.embers, .embers::before, .embers::after {
+    position: absolute;
+    inset: 0;
+    content: "";
+    z-index: 4;
+    pointer-events: none;
+    background: radial-gradient(circle at 20% 120%,rgba(255,120,0,.07) 0 2px,transparent 3px) 0 0/180px 220px, radial-gradient(circle at 80% 130%,rgba(255,180,60,.06) 0 2px,transparent 3px) 0 0/200px 240px;
+    animation: drift 14s linear infinite
+}
+
+    .embers::after {
+        animation-duration: 18s;
+        opacity: .6
+    }
+
+    .embers::before {
+        animation-duration: 22s;
+        opacity: .4
+    }
+
+@keyframes drift {
+    to {
+        transform: translateY(-8%)
+    }
+}
+
+/* Torches (UI chrome) */
+.torch {
+    position: absolute;
+    top: 40%;
+    width: 24px;
+    height: 120px;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .4rem
+}
+
+.torch-left {
+    left: 2rem
+}
+
+.torch-right {
+    right: 2rem
+}
+
+.torch::before {
+    content: "";
+    width: 10px;
+    height: 70px;
+    background: linear-gradient(#5d4a3a,#2d2219);
+    border-radius: 6px
+}
+
+.flame {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 50% 60%,#ffd36b,#ff7a00 55%,rgba(0,0,0,0) 60%);
+    box-shadow: 0 0 18px 8px rgba(255,130,30,.55);
+    animation: flicker .12s infinite alternate
+}
+
+.glow {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: radial-gradient(circle,rgba(255,150,60,.18),transparent 60%);
+    filter: blur(1px)
+}
+
+.smoke {
+    width: 30px;
+    height: 30px;
+    mix-blend-mode: screen;
+    background: radial-gradient(circle at 50% 80%,rgba(80,80,80,.25),transparent 60%);
+    animation: smoke 4s linear infinite
+}
+
+@keyframes flicker {
+    0% {
+        transform: translateY(-1px) scale(1);
+        filter: hue-rotate(0)
+    }
+
+    100% {
+        transform: translateY(1px) scale(1.03);
+        filter: hue-rotate(-5deg)
+    }
+}
+
+@keyframes smoke {
+    from {
+        transform: translateY(0) scale(1);
+        opacity: .7
+    }
+
+    to {
+        transform: translateY(-40px) scale(1.3);
+        opacity: 0
+    }
+}
+
+/* Hanging sign */
+.tavern-sign {
+    position: absolute;
+    top: 3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .2rem;
+    z-index: 5;
+    transform-origin: top center;
+    animation: swing 6s ease-in-out infinite
+}
+
+@keyframes swing {
+    0%,100% {
+        transform: translateX(-50%) rotate(-2deg)
+    }
+
+    50% {
+        transform: translateX(-50%) rotate(2deg)
+    }
+}
+
+.tavern-sign .signboard {
+    width: 300px;
+    height: 150px;
+    display: block;
+    fill: #5a3b23;
+    stroke: #2b1c12;
+    stroke-width: 6px;
+    filter: drop-shadow(0 6px 8px rgba(0,0,0,.6))
+}
+
+.tavern-sign .sign-title {
+    position: absolute;
+    top: 28px;
+    font-family: "Cinzel",serif;
+    font-weight: 700;
+    letter-spacing: .5px;
+    font-size: 1.25rem;
+    color: #f6e7c4;
+    text-shadow: 0 2px 0 rgba(0,0,0,.45)
+}
+
+.tavern-sign .sign-sub {
+    position: absolute;
+    top: 60px;
+    font-size: .85rem;
+    color: #e8d8b4;
+    opacity: .9
+}
+
+/* Ledger (card) */
+.ledger {
+    position: relative;
+    z-index: 6;
+    max-width: 560px;
+    width: calc(100% - 2rem);
+    background: radial-gradient(120% 90% at 50% 10%,rgba(255,255,255,.18),transparent 60%), linear-gradient(180deg,rgba(0,0,0,.15),rgba(0,0,0,.25)), repeating-linear-gradient(0deg,rgba(0,0,0,.02) 0 3px,transparent 3px 6px), linear-gradient(180deg,var(--parchment),#eadfbf);
+    border: 2px solid var(--parchment-edge);
+    box-shadow: 0 30px 60px rgba(0,0,0,.6);
+    border-radius: 10px;
+    color: var(--ink)
+}
+
+    .ledger:before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 10px;
+        pointer-events: none;
+        box-shadow: inset 0 0 40px rgba(0,0,0,.25)
+    }
+
+/* Logo / d20 badge */
+.logo-circle {
+    width: 124px;
+    height: 124px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%,#fdf6d7,#d8c08a);
+    display: grid;
+    place-items: center;
+    border: 2px solid #bda36d;
+    overflow: hidden;
+    position: relative
+}
+
+.logo {
+    width: 46px;
+    height: 46px;
+    fill: none;
+    stroke: #5a4320;
+    stroke-width: 4
+}
+
+.d20-wrap::before {
+    content: "";
+    position: absolute;
+    inset: -10% -60%;
+    background: linear-gradient(115deg,transparent 40%,rgba(255,255,255,.35) 50%,transparent 60%);
+    transform: translateX(-100%);
+    animation: d20-shimmer 3.2s ease-in-out infinite;
+    pointer-events: none
+}
+
+.d20 {
+    width: 70%;
+    height: auto;
+    stroke: #5a4320;
+    stroke-width: 2.5;
+    fill: #e6d6aa;
+    filter: drop-shadow(0 0 6px rgba(255,215,128,.6))
+}
+
+.d20-outline {
+    fill: url(#d20grad);
+    stroke: #4a3218;
+    stroke-width: 3
+}
+
+.d20 line {
+    stroke: #6b4b2a;
+    stroke-width: 2
+}
+
+.d20-number {
+    font-family: 'Cinzel',serif;
+    font-size: 20px;
+    font-weight: 700;
+    fill: #3b2715;
+    paint-order: stroke;
+    stroke: #fff8;
+    stroke-width: .6
+}
+
+.d20-rot {
+    transform-origin: 50px 50px;
+    animation: d20-spin 8s linear infinite
+}
+
+@keyframes d20-spin {
+    to {
+        transform: rotate(360deg)
+    }
+}
+
+@keyframes d20-shimmer {
+    0% {
+        transform: translateX(-100%)
+    }
+
+    100% {
+        transform: translateX(120%)
+    }
+}
+
+.d20-3d {
+    position: relative;
+    overflow: hidden
+}
+
+    .d20-3d canvas {
+        width: 100%;
+        height: 100%;
+        display: block
+    }
+
+/* Buttons */
+.btn-ale {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: var(--ale);
+    --bs-btn-border-color: var(--ale-700);
+    --bs-btn-hover-bg: #9b5635;
+    --bs-btn-hover-border-color: var(--ale);
+    --bs-btn-active-bg: #a15b39
+}
+
+.btn-guild {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: var(--guild);
+    --bs-btn-border-color: var(--guild-700);
+    --bs-btn-hover-bg: #335985;
+    --bs-btn-hover-border-color: var(--guild);
+    --bs-btn-active-bg: #396092
+}
+
+.btn-parchment {
+    --pad-bg: linear-gradient(180deg,#f5e9c8,#e6d9b4);
+    --pad-border: #c7b58a;
+    --pad-text: #2b2b2b;
+    background: var(--pad-bg);
+    border: 2px solid var(--pad-border);
+    color: var(--pad-text);
+    box-shadow: 0 6px 14px rgba(0,0,0,.15)
+}
+
+    .btn-parchment:hover {
+        filter: brightness(.98)
+    }
+
+/* Links */
+.parchment-links, .parchment-link {
+    color: #4a3b1e
+}
+
+    .parchment-link:hover {
+        color: #2d2413
+    }
+
+/* Provider grid */
+.provider-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: .5rem
+}
+
+@media (min-width:576px) {
+    .provider-grid {
+        grid-template-columns: 1fr
+    }
+}
+
+/* Bootstrap modal theming */
+.modal-content {
+    background: linear-gradient(180deg,var(--parchment),#eadfbf);
+    border: 2px solid var(--parchment-edge);
+    color: var(--ink)
+}
+
+.modal-title, .modal h6, .modal label {
+    color: var(--ink)
+}
+
+.modal-open .splash.tavern {
+    overflow: visible
+}
+
+.modal-backdrop {
+    z-index: 5000 !important
+}
+
+.modal {
+    z-index: 5050 !important
+}
+
+/* Pointer-event routing */
+.bg-wood, .embers, .vignette, .torch, .tavern-sign, .d20-3d, #d20-canvas {
+    pointer-events: none
+}
+
+.ledger, .ledger * {
+    pointer-events: auto
+}
+
+* {
+    cursor: auto !important
+}
+
+/* Accessibility: reduce motion */
+@media (prefers-reduced-motion:reduce) {
+    .tavern-sign, .embers, .embers::before, .embers::after, .flame, .smoke, .d20-rot, .d20-wrap::before {
+        animation: none !important
+    }
+}
+
+/* Mobile tweaks */
+@media (max-width:576px) {
+    .tavern-sign {
+        transform: none;
+        top: 1rem;
+        animation: none
+    }
+
+    .torch-left {
+        left: .5rem
+    }
+
+    .torch-right {
+        right: .5rem
+    }
+
+    .ledger {
+        padding: 1.25rem !important
+    }
+}
