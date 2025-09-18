@@ -361,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/ArtificialDungeonMaster/appsettings.Development.json
+/appsettings.Development.json
+/appsettings.json
